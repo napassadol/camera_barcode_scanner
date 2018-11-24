@@ -1,5 +1,10 @@
 import cv2
 from pyzbar import pyzbar
+import RPi.GPIO as GPIO
+import requests
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18, GPIO.IN)
 
 def scanner(frame):
     barcodes = pyzbar.decode(frame)
@@ -17,6 +22,8 @@ def scanner(frame):
 def main():
     cap = cv2.VideoCapture(0)
     while cap.isOpened():
+        input_state = GPIO.input(18)
+        print(input_state)
         _, frame = cap.read()
         frame = scanner(frame)
         cv2.imshow('image', frame)
