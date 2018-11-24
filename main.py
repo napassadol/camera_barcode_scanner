@@ -23,9 +23,9 @@ def main():
     cap = cv2.VideoCapture(0)
     while cap.isOpened():
         input_state = GPIO.input(18)
-        print(input_state)
         _, frame = cap.read()
-        frame = scanner(frame)
+        if input_state == False:
+            frame = scanner(frame)
         cv2.imshow('image', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
